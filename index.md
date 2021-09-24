@@ -2,14 +2,19 @@
 
 ### About Myself
 Born and raised in Bejing, China
+
 Not an orthodoxal product of Chinese education, as I didn't take neither the Chinese High School Entrance Test nor the Chinese University Entrance Test (GaoKao)
+
 Like Snowboarding, Soccer, Formula 1, Simulator Racing, Texas Holdem 
 
 ### Education
 University of California, Santa Barbara (2016-2020)
+
 College of Creative Studies (Honor's College)
-Bachelor of Science 
+
+Bachelor of Science \\
 Major in Physics
+
 Minor in Statistics
 
 New York University (2020-2022)
