@@ -1,4 +1,12 @@
-## Welcome to GitHub Pages
+## Welcome to Ziyi's Site
+
+### Education
+1.
+2.
+
+### Experience
+
+### Projects
 
 You can use the [editor on GitHub](https://github.com/messixieziyi/website/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
