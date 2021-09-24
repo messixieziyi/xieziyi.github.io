@@ -37,11 +37,14 @@ Data Scientist Intern at Amazon (2021.5-2021.8)
 ### Research Experience
 
 Resrarch Asistant at Fluid Energy Science lab at University of California, Santabarbara (2018.3-2020.6)
-- The Big Question: Hard to sustain vortices in liquids in small scale channels to mix two
+
+The Big Question: Hard to sustain vortices in liquids in small scale channels to mix two
 different fluids
-- Solution: Search for a silicon channel with certain structures that could sustain vortices in the
+
+Solution: Search for a silicon channel with certain structures that could sustain vortices in the
 liquid
-- Research and Result:
+
+Research and Result
 - Built different silicon cells in which there is a channel of 1000 m width with small
 structures of the scale tens of m, and two inlets for two different fluids and one outlet for
 outflow. Used syringe pump to push liquids passing through the cell. Use fluids with
