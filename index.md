@@ -20,7 +20,7 @@ Major GPA = 3.9
 Major in Data Science\\
 GPA = 3.9
 
-### Experience
+### Work Experience
 
 Data Scientist Intern at Amazon (2021.5-2021.8)
 - Find reasons behind the inaccuracy of the current capacity demand forecast model, then implement a more accurate model.
@@ -33,6 +33,27 @@ Data Scientist Intern at Amazon (2021.5-2021.8)
 [Playing Gomoku Like A Human](https://github.com/messixieziyi/xieziyi.github.io/blob/main/Playing%20Gomoku%20Like%20A%20Human.pdf)
 
 [Recommendation System on Million Song Dataset using Alternating Least Square Algorithm](https://github.com/messixieziyi/xieziyi.github.io/blob/main/Recommendation%20System%20on%20Million%20Song%20Dataset%20using%20Alternating%20Least%20Square%20Algorithm.pdf)
+
+### Research Experience
+
+Resrarch Asistant at Fluid Energy Science lab at University of California, Santabarbara (2018.3-2020.6)
+- The Big Question: Hard to sustain vortices in liquids in small scale channels to mix two
+different fluids
+- Solution: Search for a silicon channel with certain structures that could sustain vortices in the
+liquid
+- Research and Result:
+- Built different silicon cells in which there is a channel of 1000 m width with small
+structures of the scale tens of m, and two inlets for two different fluids and one outlet for
+outflow. Used syringe pump to push liquids passing through the cell. Use fluids with
+fluorescent beads to record the flow using a fluorescence confocal microscope and analyze
+it with micro-PIV analysis
+- Managed to have two working structures
+1. Constant Pumping: Successfully created non-dying vortices in the fluids inside the
+cell
+2. Stop-and-go Pumping: Successfully created periodic vortices along the channel.
+- Upon successfully creating and sustaining the vortices, mixing is guaranteed
+- The next step would be to input fluids containing different fluorescents beads and measure
+the mixing efficiency by calculating the standard deviation of the distribution of beads
 
 
 You can use the [editor on GitHub](https://github.com/messixieziyi/website/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
