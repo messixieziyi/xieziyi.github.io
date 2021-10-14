@@ -36,7 +36,7 @@ Data Scientist Intern at Amazon (2021.5-2021.8)
 
 ### Research Experience
 
-Resrarch Asistant at Fluid Energy Science lab at University of California, Santabarbara (2018.3-2020.6)
+**Resrarch Asistant at Fluid Energy Science lab at University of California, Santabarbara (2018.3-2020.6)**
 
 The Big Question: Hard to sustain vortices in liquids in small scale channels to mix two
 different fluids
@@ -57,6 +57,21 @@ cell
 - Upon successfully creating and sustaining the vortices, mixing is guaranteed
 - The next step would be to input fluids containing different fluorescents beads and measure
 the mixing efficiency by calculating the standard deviation of the distribution of beads
+
+**Resrarch Asistant at Bio-Engineering lab at the University of Tokyo (2018.6-2018.8)**
+
+The Big Question: To describe the reaction between Mechanical Stress and Biological Cell
+on the pico-second time scale
+- Solution: Investigate the interaction using traditional high-speed camera, develop a new
+pulse laser-based imaging technique have faster imaging speed and can capture sequential
+image
+- Research and Result:
+- Used pulse laser and ink to generate the acoustic wave, and developed cancer cells using
+cell culturing
+- Successfully used traditional high-speed camera to capture the interaction moment
+between acoustic wave and cell
+- Used image processing software to reduce the noise and detect the edge of the cell to
+determine the deformation of cell wall
 
 
 You can use the [editor on GitHub](https://github.com/messixieziyi/website/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
