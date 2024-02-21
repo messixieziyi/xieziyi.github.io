@@ -29,7 +29,7 @@ Data Scientist Intern at Amazon (2021.5-2021.8)
 
 [Analysis on Credit Default Risks from Loans](https://github.com/messixieziyi/xieziyi.github.io/blob/main/Analysis%20on%20Credit%20Default%20Risks%20from%20Loans%20.pdf)
 
-[Playing Gomoku Like A Human](https://github.com/messixieziyi/xieziyi.github.io/blob/main/Playing%20Gomoku%20Like%20A%20Human.pdf)
+[Playing Gomoku Like A Human](Playing%20Gomoku%20Like%20A%20Human.pdf)
 
 [Recommendation System on Million Song Dataset using Alternating Least Square Algorithm](https://github.com/messixieziyi/xieziyi.github.io/blob/main/Recommendation%20System%20on%20Million%20Song%20Dataset%20using%20Alternating%20Least%20Square%20Algorithm.pdf)
 
