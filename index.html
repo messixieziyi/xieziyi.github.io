@@ -35,6 +35,11 @@
       overflow-y: auto;
     }
 
+    .card.large {
+      width: 620px;
+      height: 360px;
+    }
+
     h2,
     h3 {
       color: #2c3e50;
@@ -106,7 +111,62 @@
         <li><a href="recommendation-system-on-million-song-dataset-using-alternating-least-square-algorithm.html">Recommendation System on Million Song Dataset using Alternating Least Square Algorithm</a></li>
       </ul>
     </div>
-  </div>
-</body>
+
+      <div class="card large">
+        <h2>Stock Price History</h2>
+        <p>% of 2024-06-01 close (2022-06-01 to today):</p>
+        <canvas id="stock-chart"></canvas>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      async function loadStockHistory() {
+        const baseDate = '2024-05-31'; // market close closest to 2024-06-01
+        const names = { COF: 'Capital One', AMZN: 'Amazon' };
+
+        try {
+          const data = await fetch('stock-data.json').then((r) => r.json());
+          const labels = [];
+          const datasets = [];
+
+          Object.keys(data).forEach((symbol) => {
+            const timestamps = data[symbol].timestamp;
+            const closes = data[symbol].adjclose;
+            const dates = timestamps.map((t) => new Date(t * 1000).toISOString().slice(0, 10));
+            if (labels.length === 0) labels.push(...dates);
+            const baseIndex = dates.indexOf(baseDate);
+            if (baseIndex === -1) throw new Error('Base date not found for ' + symbol);
+            const basePrice = closes[baseIndex];
+            const pct = closes.map((c) => ((c / basePrice) * 100).toFixed(2));
+            datasets.push({
+              label: names[symbol],
+              data: pct,
+              borderColor: symbol === 'COF' ? '#e74c3c' : '#3498db',
+              borderWidth: 1,
+              pointRadius: 0,
+              fill: false,
+            });
+          });
+
+          const ctx = document.getElementById('stock-chart').getContext('2d');
+          new Chart(ctx, {
+            type: 'line',
+            data: { labels, datasets },
+            options: {
+              scales: {
+                y: { title: { display: true, text: '% of 2024-06-01 Price' } },
+              },
+              plugins: { legend: { position: 'bottom' } },
+            },
+          });
+        } catch (e) {
+          const el = document.getElementById('stock-chart');
+          el.parentElement.textContent = 'Failed to load stock data.';
+        }
+      }
+      loadStockHistory();
+    </script>
+  </body>
 </html>
 
