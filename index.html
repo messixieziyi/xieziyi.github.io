@@ -106,7 +106,41 @@
         <li><a href="recommendation-system-on-million-song-dataset-using-alternating-least-square-algorithm.html">Recommendation System on Million Song Dataset using Alternating Least Square Algorithm</a></li>
       </ul>
     </div>
+
+    <div class="card">
+      <h2>Live Stock Prices</h2>
+      <p>Percentage of 2024-06-01 closing price:</p>
+      <div id="stock-info">Loading...</div>
+    </div>
   </div>
+
+  <script>
+    async function updateStocks() {
+      const base = {
+        COF: 137.63, // Capital One close on 2024-05-31 (nearest to 2024-06-01)
+        AMZN: 176.44, // Amazon close on 2024-05-31 (nearest to 2024-06-01)
+      };
+      const names = { COF: 'Capital One', AMZN: 'Amazon' };
+      try {
+        const symbols = Object.keys(base);
+        const responses = await Promise.all(
+          symbols.map((s) =>
+            fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${s}?range=1d&interval=1d`).then((r) => r.json())
+          )
+        );
+        const lines = responses.map((data, idx) => {
+          const symbol = symbols[idx];
+          const price = data.chart.result[0].meta.regularMarketPrice;
+          const pct = ((price / base[symbol]) * 100).toFixed(2);
+          return `${names[symbol]}: ${pct}%`;
+        });
+        document.getElementById('stock-info').innerHTML = lines.join('<br>');
+      } catch (e) {
+        document.getElementById('stock-info').textContent = 'Failed to load stock data.';
+      }
+    }
+    updateStocks();
+  </script>
 </body>
 </html>
 
