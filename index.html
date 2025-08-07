@@ -106,7 +106,74 @@
         <li><a href="recommendation-system-on-million-song-dataset-using-alternating-least-square-algorithm.html">Recommendation System on Million Song Dataset using Alternating Least Square Algorithm</a></li>
       </ul>
     </div>
-  </div>
-</body>
+
+      <div class="card">
+        <h2>Stock Price History</h2>
+        <p>% of 2024-06-01 close (2022-06-01 to today):</p>
+        <canvas id="stock-chart"></canvas>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      async function loadStockHistory() {
+        const symbols = ['COF', 'AMZN'];
+        const names = { COF: 'Capital One', AMZN: 'Amazon' };
+        const start = Math.floor(new Date('2022-06-01T00:00:00Z').getTime() / 1000);
+        const end = Math.floor(Date.now() / 1000);
+        const baseDate = '2024-05-31'; // market close closest to 2024-06-01
+
+        try {
+          const responses = await Promise.all(
+            symbols.map((s) =>
+              fetch(
+                `https://query1.finance.yahoo.com/v8/finance/chart/${s}?period1=${start}&period2=${end}&interval=1d`
+              ).then((r) => r.json())
+            )
+          );
+
+          const labels = [];
+          const datasets = [];
+
+          responses.forEach((data, idx) => {
+            const symbol = symbols[idx];
+            const result = data.chart.result[0];
+            const timestamps = result.timestamp;
+            const closes = result.indicators.adjclose[0].adjclose;
+            const dates = timestamps.map((t) => new Date(t * 1000).toISOString().slice(0, 10));
+            if (labels.length === 0) labels.push(...dates);
+            const baseIndex = dates.indexOf(baseDate);
+            if (baseIndex === -1) throw new Error('Base date not found');
+            const basePrice = closes[baseIndex];
+            const pct = closes.map((c) => ((c / basePrice) * 100).toFixed(2));
+            datasets.push({
+              label: names[symbol],
+              data: pct,
+              borderColor: symbol === 'COF' ? '#e74c3c' : '#3498db',
+              borderWidth: 1,
+              pointRadius: 0,
+              fill: false,
+            });
+          });
+
+          const ctx = document.getElementById('stock-chart').getContext('2d');
+          new Chart(ctx, {
+            type: 'line',
+            data: { labels, datasets },
+            options: {
+              scales: {
+                y: { title: { display: true, text: '% of 2024-06-01 Price' } },
+              },
+              plugins: { legend: { position: 'bottom' } },
+            },
+          });
+        } catch (e) {
+          const el = document.getElementById('stock-chart');
+          el.parentElement.textContent = 'Failed to load stock data.';
+        }
+      }
+      loadStockHistory();
+    </script>
+  </body>
 </html>
 
