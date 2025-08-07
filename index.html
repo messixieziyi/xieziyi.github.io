@@ -35,6 +35,11 @@
       overflow-y: auto;
     }
 
+    .card.large {
+      width: 620px;
+      height: 360px;
+    }
+
     h2,
     h3 {
       color: #2c3e50;
@@ -107,7 +112,7 @@
       </ul>
     </div>
 
-      <div class="card">
+      <div class="card large">
         <h2>Stock Price History</h2>
         <p>% of 2024-06-01 close (2022-06-01 to today):</p>
         <canvas id="stock-chart"></canvas>
@@ -117,33 +122,21 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
       async function loadStockHistory() {
-        const symbols = ['COF', 'AMZN'];
-        const names = { COF: 'Capital One', AMZN: 'Amazon' };
-        const start = Math.floor(new Date('2022-06-01T00:00:00Z').getTime() / 1000);
-        const end = Math.floor(Date.now() / 1000);
         const baseDate = '2024-05-31'; // market close closest to 2024-06-01
+        const names = { COF: 'Capital One', AMZN: 'Amazon' };
 
         try {
-          const responses = await Promise.all(
-            symbols.map((s) =>
-              fetch(
-                `https://query1.finance.yahoo.com/v8/finance/chart/${s}?period1=${start}&period2=${end}&interval=1d`
-              ).then((r) => r.json())
-            )
-          );
-
+          const data = await fetch('stock-data.json').then((r) => r.json());
           const labels = [];
           const datasets = [];
 
-          responses.forEach((data, idx) => {
-            const symbol = symbols[idx];
-            const result = data.chart.result[0];
-            const timestamps = result.timestamp;
-            const closes = result.indicators.adjclose[0].adjclose;
+          Object.keys(data).forEach((symbol) => {
+            const timestamps = data[symbol].timestamp;
+            const closes = data[symbol].adjclose;
             const dates = timestamps.map((t) => new Date(t * 1000).toISOString().slice(0, 10));
             if (labels.length === 0) labels.push(...dates);
             const baseIndex = dates.indexOf(baseDate);
-            if (baseIndex === -1) throw new Error('Base date not found');
+            if (baseIndex === -1) throw new Error('Base date not found for ' + symbol);
             const basePrice = closes[baseIndex];
             const pct = closes.map((c) => ((c / basePrice) * 100).toFixed(2));
             datasets.push({
