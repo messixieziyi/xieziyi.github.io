@@ -107,40 +107,73 @@
       </ul>
     </div>
 
-    <div class="card">
-      <h2>Live Stock Prices</h2>
-      <p>Percentage of 2024-06-01 closing price:</p>
-      <div id="stock-info">Loading...</div>
+      <div class="card">
+        <h2>Stock Price History</h2>
+        <p>% of 2024-06-01 close (2022-06-01 to today):</p>
+        <canvas id="stock-chart"></canvas>
+      </div>
     </div>
-  </div>
 
-  <script>
-    async function updateStocks() {
-      const base = {
-        COF: 137.63, // Capital One close on 2024-05-31 (nearest to 2024-06-01)
-        AMZN: 176.44, // Amazon close on 2024-05-31 (nearest to 2024-06-01)
-      };
-      const names = { COF: 'Capital One', AMZN: 'Amazon' };
-      try {
-        const symbols = Object.keys(base);
-        const responses = await Promise.all(
-          symbols.map((s) =>
-            fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${s}?range=1d&interval=1d`).then((r) => r.json())
-          )
-        );
-        const lines = responses.map((data, idx) => {
-          const symbol = symbols[idx];
-          const price = data.chart.result[0].meta.regularMarketPrice;
-          const pct = ((price / base[symbol]) * 100).toFixed(2);
-          return `${names[symbol]}: ${pct}%`;
-        });
-        document.getElementById('stock-info').innerHTML = lines.join('<br>');
-      } catch (e) {
-        document.getElementById('stock-info').textContent = 'Failed to load stock data.';
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      async function loadStockHistory() {
+        const symbols = ['COF', 'AMZN'];
+        const names = { COF: 'Capital One', AMZN: 'Amazon' };
+        const start = Math.floor(new Date('2022-06-01T00:00:00Z').getTime() / 1000);
+        const end = Math.floor(Date.now() / 1000);
+        const baseDate = '2024-05-31'; // market close closest to 2024-06-01
+
+        try {
+          const responses = await Promise.all(
+            symbols.map((s) =>
+              fetch(
+                `https://query1.finance.yahoo.com/v8/finance/chart/${s}?period1=${start}&period2=${end}&interval=1d`
+              ).then((r) => r.json())
+            )
+          );
+
+          const labels = [];
+          const datasets = [];
+
+          responses.forEach((data, idx) => {
+            const symbol = symbols[idx];
+            const result = data.chart.result[0];
+            const timestamps = result.timestamp;
+            const closes = result.indicators.adjclose[0].adjclose;
+            const dates = timestamps.map((t) => new Date(t * 1000).toISOString().slice(0, 10));
+            if (labels.length === 0) labels.push(...dates);
+            const baseIndex = dates.indexOf(baseDate);
+            if (baseIndex === -1) throw new Error('Base date not found');
+            const basePrice = closes[baseIndex];
+            const pct = closes.map((c) => ((c / basePrice) * 100).toFixed(2));
+            datasets.push({
+              label: names[symbol],
+              data: pct,
+              borderColor: symbol === 'COF' ? '#e74c3c' : '#3498db',
+              borderWidth: 1,
+              pointRadius: 0,
+              fill: false,
+            });
+          });
+
+          const ctx = document.getElementById('stock-chart').getContext('2d');
+          new Chart(ctx, {
+            type: 'line',
+            data: { labels, datasets },
+            options: {
+              scales: {
+                y: { title: { display: true, text: '% of 2024-06-01 Price' } },
+              },
+              plugins: { legend: { position: 'bottom' } },
+            },
+          });
+        } catch (e) {
+          const el = document.getElementById('stock-chart');
+          el.parentElement.textContent = 'Failed to load stock data.';
+        }
       }
-    }
-    updateStocks();
-  </script>
-</body>
+      loadStockHistory();
+    </script>
+  </body>
 </html>
 
